@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Pujas online</title>
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module" src="js/index.js"></script>
+</head>
+
+<body>
+    <div class="container" id="app">
+        <header>
+            <h1>💸 Puja Online</h1>
+        </header>
+        <main>
+            <section class="mensajes" ref="mensajesContenedor">
+                <ul class="collection">
+                    <li v-for="numero in numeros" class="collection-item">
+                        {{numero.nombre}} puja {{numero.puja}} EUROS
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <div class="row">
+                    <div class="col s9">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input v-model="nombre" type="text" placeholder="Nombre">
+                            </div>
+                            <div class="input-field col s12">
+                                <input v-model="nuevaPuja" type="number" min="1" class="materialize-textarea" placeholder="Nueva puja"></input>
+                            </div>
+                        </div>
+                        <button @click.prevent="empezarPuja" class="btn waves-effect waves-light" :disabled="pujaEnProceso">¡Empezar puja!</button>
+                    </div>
+                    <div class="col s3">
+                        <button @click.prevent="enviarPuja" class="btn waves-effect waves-light btn__submit" type="submit" name="action" :disabled="!pujaEnProceso">Pujar
+                            <i class="material-icons right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

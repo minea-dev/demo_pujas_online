@@ -1,0 +1,14 @@
+.container {
+    max-width: 30rem;
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+.btn__submit {
+    height: 10rem;
+}
+
+.mensajes {
+    height: 50vh;
+    overflow-y: auto;
+}

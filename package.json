@@ -1,0 +1,25 @@
+{
+    "name": "demo-pujas-online",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/minealicer/demo-pujas-online.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/minealicer/demo-pujas-online/issues"
+    },
+    "homepage": "https://github.com/minealicer/demo-pujas-online#readme",
+    "dependencies": {
+        "@supabase/supabase-js": "^1.30.7",
+        "materialize-css": "^1.0.0-rc.2",
+        "vue": "^3.2.31"
+    }
+}
