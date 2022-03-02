@@ -17,8 +17,13 @@
             <h1>💸 Puja Online</h1>
         </header>
         <main>
+            <h3></h3>
             <section class="mensajes" ref="mensajesContenedor">
-                <ul class="collection">
+                <div v-if="ganador.length >0">
+                    <h4>¡¡Enhorabuena {{ganador}}!! Has ganado la puja 🥳🎊</h4>
+                    <p>Apoquina la pasta al salir 🤑</p>
+                </div>
+                <ul class="collection" v-else>
                     <li v-for="numero in numeros" class="collection-item">
                         {{numero.nombre}} puja {{numero.puja}} EUROS
                     </li>
@@ -29,10 +34,10 @@
                     <div class="col s9">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input v-model="nombre" type="text" placeholder="Nombre">
+                                <input v-model="nombre" type="text" placeholder="Nombre" :disabled="!pujaEnProceso" required>
                             </div>
                             <div class="input-field col s12">
-                                <input v-model="nuevaPuja" type="number" min="1" class="materialize-textarea" placeholder="Nueva puja"></input>
+                                <input v-model="nuevaPuja" type="number" min="1" class="materialize-textarea" placeholder="Nueva puja" :disabled="!pujaEnProceso" required></input>
                             </div>
                         </div>
                         <button @click.prevent="empezarPuja" class="btn waves-effect waves-light" :disabled="pujaEnProceso">¡Empezar puja!</button>

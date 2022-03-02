@@ -31,10 +31,12 @@ createApp({
             this.numeros = data;
         },
         enviarPuja: async function() {
-            if (this.numeros[this.numeros.length - 1].puja < this.nuevaPuja) {
-                const { data, error } = await cli.from('Pujas').insert([{ nombre: this.nombre, puja: this.nuevaPuja }])
+            if (this.numeros.length === 0 || this.numeros[this.numeros.length - 1].puja < this.nuevaPuja) {
+                const { data, error } = await cli.from('Pujas').insert([{ nombre: this.nombre || 'Anónimo', puja: this.nuevaPuja }])
                     // Limpiamos el mensaje
                 this.nuevaPuja = '';
+            } else {
+                alert('Introduce un numero superior a lo anteriormente pujado');
             }
         },
         escucharNuevasPujas: function() {
@@ -48,30 +50,39 @@ createApp({
                 .subscribe()
         },
         empezarPuja: function() {
+            // Al empiezar
             this.pujaEnProceso = true;
+            // Al terminar
             setTimeout(() => {
                 this.pujaEnProceso = false;
-                this.ganador = this.numeros[this.numeros.length - 1].nombre;
-                //deletePujas();
-                console.log('El ganador es ' + this.ganador)
-            }, 10000);
+                this.estableceGanador();
+            }, 100); // 3 min -- 180000
         },
-        /* deletePujas: async function() {
-             numeros.filter(numero => {
-                 await fetch(`${supabaseUrl}/rest/v1/Pujas?id=eq.${numero.id}`, {
-                     headers: headers,
-                     method: 'DELETE'
-                 });
-             })
-
-         } */
+        estableceGanador: function() {
+            if (this.numeros.length === 0) {
+                alert('No ha pujado nadie')
+            } else {
+                this.showGanador();
+            }
+        },
+        showGanador: function() {
+            this.ganador = this.numeros[this.numeros.length - 1].nombre;
+            setTimeout(async function() {
+                await this.numeros.filter(numero => {
+                    fetch(`${supabaseUrl}/rest/v1/Pujas?id=eq.${numero.id}`, {
+                        headers: headers,
+                        method: 'DELETE'
+                    });
+                    this.numeros = [];
+                    this.nombre = '';
+                    this.ganador = '';
+                })
+            }, 100);
+        }
     },
     mounted() {
         this.cargarNumeros();
         this.escucharNuevasPujas();
-        if (localStorage.nombre) {
-            this.nombre = localStorage.nombre;
-        }
     },
     watch: {
         mensajes: {
@@ -83,9 +94,6 @@ createApp({
                 })
             },
             deep: true
-        },
-        nombre(nuevoNombre) {
-            localStorage.nombre = nuevoNombre;
         }
     }
 }).mount('#app')
