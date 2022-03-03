@@ -56,7 +56,7 @@ createApp({
             setTimeout(() => {
                 this.pujaEnProceso = false;
                 this.estableceGanador();
-            }, 180000); // 3 min -- 180000
+            }, 60000); // 3 min -- 180000
         },
         reseteoTabla: async function() {
             await this.numeros.filter(numero => {
