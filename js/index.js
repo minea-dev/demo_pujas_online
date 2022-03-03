@@ -74,7 +74,7 @@ createApp({
             } else {
                 this.ganador = this.numeros[this.numeros.length - 1].nombre;
                 this.reseteoTabla();
-                setTimeout(() => this.ganador = '', 10000);
+                setTimeout(() => this.ganador = '', 5000);
             }
         },
 
