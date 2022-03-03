@@ -50,35 +50,34 @@ createApp({
                 .subscribe()
         },
         empezarPuja: function() {
-            // Al empiezar
+            // Al empezar
             this.pujaEnProceso = true;
             // Al terminar
             setTimeout(() => {
                 this.pujaEnProceso = false;
                 this.estableceGanador();
-            }, 100); // 3 min -- 180000
+            }, 180000); // 3 min -- 180000
+        },
+        reseteoTabla: async function() {
+            await this.numeros.filter(numero => {
+                fetch(`${supabaseUrl}/rest/v1/Pujas?id=eq.${numero.id}`, {
+                    headers: headers,
+                    method: 'DELETE'
+                });
+                this.numeros = [];
+                this.nombre = '';
+            });
         },
         estableceGanador: function() {
             if (this.numeros.length === 0) {
                 alert('No ha pujado nadie')
             } else {
-                this.showGanador();
+                this.ganador = this.numeros[this.numeros.length - 1].nombre;
+                this.reseteoTabla();
+                setTimeout(() => this.ganador = '', 10000);
             }
         },
-        showGanador: function() {
-            this.ganador = this.numeros[this.numeros.length - 1].nombre;
-            setTimeout(async function() {
-                await this.numeros.filter(numero => {
-                    fetch(`${supabaseUrl}/rest/v1/Pujas?id=eq.${numero.id}`, {
-                        headers: headers,
-                        method: 'DELETE'
-                    });
-                    this.numeros = [];
-                    this.nombre = '';
-                    this.ganador = '';
-                })
-            }, 100);
-        }
+
     },
     mounted() {
         this.cargarNumeros();
