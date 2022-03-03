@@ -18,7 +18,8 @@ createApp({
             nombre: '',
             nuevaPuja: '',
             ganador: '',
-            pujaEnProceso: false
+            pujaEnProceso: false,
+            precioGanador: 0
         }
     },
     methods: {
@@ -73,6 +74,7 @@ createApp({
                 alert('No ha pujado nadie')
             } else {
                 this.ganador = this.numeros[this.numeros.length - 1].nombre;
+                this.precioGanador = this.numeros[this.numeros.length - 1].puja;
                 this.reseteoTabla();
                 setTimeout(() => this.ganador = '', 5000);
             }
