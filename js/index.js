@@ -86,7 +86,7 @@ createApp({
         this.escucharNuevasPujas();
     },
     watch: {
-        mensajes: {
+        numeros: {
             handler(newValue, oldValue) {
                 // Desciendo el scroll
                 this.$nextTick(() => {
